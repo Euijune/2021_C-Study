@@ -36,7 +36,7 @@ int main() {
 }
 */
 
-// 메모리 최소화
+// 메모리 최소화?
 #include <iostream>
 using namespace std;
 
