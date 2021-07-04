@@ -1,99 +1,90 @@
+#include "stack.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
-class Stack
+Stack::Stack()
 {
-private:
-	int top;
-	int arr[5];
-
-public:
-
-	//持失切
-	Stack() 
+	top = -1;
+	for (int i = 0; i < 5; i++)
 	{
-		top = -1;
-		for (int i = 0; i < 5; i++) 
-		{
-			arr[i] = 0;
-		}
+		arr[i] = 0;
 	}
+}
 
-	//社瑚切
-	~Stack() {}
+Stack::~Stack() {}
 
-	bool isEmpty() 
+bool Stack::isEmpty()
+{
+	if (top == -1)
+		return true;
+	else
+		return false;
+}
+
+bool Stack::isFull()
+{
+	if (top == 4) // max index = 5
+		return true;
+	else
+		return false;
+}
+
+void Stack::push(int val)
+{
+	if (isFull())
+		cout << "Stack Overflow" << endl;
+	else
 	{
-		if (top == -1)
-			return true;
-		else
-			return false;
+		top++;
+		arr[top] = val;
 	}
+}
 
-	bool isFull() 
+int Stack::pop()
+{
+	if (isEmpty())
 	{
-		if (top == 4) // max index = 5
-			return true;
-		else
-			return false;
+		cout << "Stack Overflow" << endl;
+		return 0;
 	}
+	else
+	{
+		int popValue = arr[top];
+		arr[top] = 0;
+		top--;
+		return popValue;
+	}
+}
 
-	void push(int val) 
-	{
-		if (isFull())
-			cout << "Stack Overflow" << endl;
-		else
-		{
-			top++;
-			arr[top] = val;
-		}
-	}
+int Stack::count()
+{
+	return (top + 1);
+}
 
-	int pop()
+int Stack::peek(int pos)
+{
+	if (isEmpty())
 	{
-		if (isEmpty())
-		{
-			cout << "Stack Overflow" << endl;
-			return 0;
-		}
-		else
-		{
-			int popValue = arr[top];
-			arr[top] = 0;
-			top--;
-			return popValue;
-		}
+		cout << "Stack Overflow" << endl;
+		return 0;
 	}
+	else
+		return arr[pos];
+}
 
-	int count()
-	{
-		return (top + 1);
-	}
+void Stack::change(int pos, int val)
+{
+	arr[pos] = val;
+	cout << "value changed at location " << pos << endl;
+}
 
-	int peek(int pos)
+void Stack::display()
+{
+	cout << "All values in the Stack are " << endl;
+	for (int i = 4; i >= 0; i--)
 	{
-		if (isEmpty())
-		{
-			cout << "Stack Overflow" << endl;
-			return 0;
-		}
-		else
-			return arr[pos];
+		cout << arr[i] << endl;
 	}
+}
 
-	void change(int pos, int val) 
-	{
-		arr[pos] = val;
-		cout << "value changed at location " << pos << endl;
-	}
-
-	void display()
-	{
-		cout << "All values in the Stack are " << endl;
-		for (int i = 4; i > 0; i--) 
-		{
-			cout << arr[i] << endl;
-		}
-	}
-};
