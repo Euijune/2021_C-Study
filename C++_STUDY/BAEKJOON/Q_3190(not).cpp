@@ -4,20 +4,19 @@
 using namespace std;
 using pii = pair<int, int>;
 
-void move(pii* apple, queue<pii>& snake, int& row, int& col, char dir, int K); // 뱀의 이동 구현
+void move(pii* apple, queue<pii>& snake, int& row, int& col, char dir, int N, int K, bool& gameover); // 뱀의 이동 구현
 bool isApple(pii* apple, int row, int col, int K); // 사과를 만났는가?
 void changeDirection(char& dir, char cmd);
-bool isHitWall(queue<pii> snake, int N);
-bool isHitBody(); // 구현해야 함
-//bool gameOver(isHitWall(), isHitBody()); // 구현
+void isHitWall(queue<pii> snake, int N, bool& gameover);
+void isHitBody(queue<pii> snake, bool& gameover);
 
 
 int main() {
+	bool gameover = false;
 	int N, K, L, row, col, t, time = 0;
 	char cmd, direction = 'R'; // Left, Right, Up, Down. 초기 방향은 오른쪽임
 
 	queue<pii> snake({ {1,1} });	// 뱀의 몸에 대한 정보. front가 꼬리, back이 머리.
-	printf("초기위치 : %d행 %d열\n", snake.back().first, snake.back().second); // test
 	queue<pii> dire;	//방향 전환에 대한 정보
 
 	scanf_s("%d", &N);
@@ -39,55 +38,55 @@ int main() {
 		dire.push({ t, cmd });
 	}
 	
-	while (!isHitWall(snake, N)) {
+	while (true) {
+		if (gameover)
+			break;
 		time++;	//매 초마다
-		printf("====== time = %d ======\n\n", time);
-		move(apple, snake, snake.front().first, snake.front().second, direction, K);	// 주어진 조건에 따라 이동한다. move(queue, row, col, dir)
+		move(apple, snake, snake.back().first, snake.back().second, direction, N, K, gameover);	
+		// 주어진 조건에 따라 이동한다. move(queue, row, col, dir)
 		
-		if (time == dire.front().first) { // 방향전환
-			printf("방향전환 : %c\n", dire.front().second);	//test
-			changeDirection(direction, dire.front().second);
-			dire.pop();
+		if (!dire.empty()) {
+			if (time == dire.front().first) { // 방향전환
+				changeDirection(direction, dire.front().second);
+				dire.pop();
+			}
 		}
 	}
-	printf("\nAnswer : %d", time);
+	printf("%d", time);
 
 	delete[] apple;
 	return 0;
 }
 
-void move(pii* apple, queue<pii>& snake, int& row, int& col, char dir, int K) {
+void move(pii* apple, queue<pii>& snake, int& row, int& col, char dir, int N, int K, bool& gameover) {
 	int new_r = 0, new_c = 0;
-
+	
 	switch (dir) {
-	case 'L':
+	case 'U':
 		new_r = row - 1;
 		new_c = col;
 		break;
-	case 'R':
+	case 'D':
 		new_r = row + 1;
 		new_c = col;
 		break;
-	case 'D':
+	case 'R':
 		new_r = row;
 		new_c = col + 1;
 		break;
-	case 'U':
+	case 'L':
 		new_r = row;
 		new_c = col - 1;
 		break;
 	}
-
-	if (isApple(apple, row, col, K)) {	//이동한 칸에 사과가 있을 경우
+	if (isApple(apple, new_r, new_c, K)) {	//이동한 칸에 사과가 있을 경우
 		snake.push({ new_r, new_c });
-		printf("머리 : %d행 %d열\n", snake.back().first, snake.back().second); // test
-		printf("꼬리 : %d행 %d열\n", snake.front().first, snake.front().second); // test
 	}
 	else {				// 이동한 칸에 사과가 없을 경우
 		snake.push({ new_r, new_c });
+		isHitBody(snake, gameover);
+		isHitWall(snake, N, gameover);
 		snake.pop();
-		printf("머리 : %d행 %d열\n", snake.back().first, snake.back().second); // test
-		printf("꼬리 : %d행 %d열\n", snake.front().first, snake.front().second); // test
 	}
 
 }
@@ -136,15 +135,22 @@ void changeDirection(char& dir, char cmd) {
 	}
 }
 
-bool isHitWall(queue<pii> snake, int N) {
-	if (snake.back().first > N || snake.back().second > N)
-		return true;
-	else if (snake.back().first == 0 || snake.back().second == 0)
-		return true;
-	else
-		return false;
+void isHitWall(queue<pii> snake, int N, bool& gameover) {
+	if (snake.back().first > N || snake.back().second > N) {
+		gameover = true;
+	}
+	else if (snake.back().first == 0 || snake.back().second == 0) {
+		gameover = true;
+	}
 }
 
-bool isHitBody() {
-
+void isHitBody(queue<pii> snake, bool& gameover) {
+	while (snake.size()!=1) {
+		if (snake.front().first == snake.back().first) {
+			if (snake.front().second == snake.back().second) {
+				gameover = true;
+			}
+		}
+		snake.pop();
+	}
 }
