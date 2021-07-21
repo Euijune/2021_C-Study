@@ -5,22 +5,18 @@ using namespace std;
 void fibonacci(int n, vector<pair<int, int>>& num) {
     if (n == 0) {
         num[0] = { 1, 0 };
-        return;
     }
     else if (n == 1) {
         num[1] = { 0, 1 };
-        return;
     }
     else {
         if(num[n].first != 0) {
-            return;
         }
         else {
         fibonacci(n - 2, num);
         fibonacci(n - 1, num);
         num[n].first = num[n - 2].first + num[n - 1].first;
         num[n].second = num[n - 2].second + num[n - 1].second;
-        return;
         }
     }
 }
