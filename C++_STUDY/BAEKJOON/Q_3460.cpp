@@ -19,6 +19,8 @@ int main() {
 	Num = deciTobin(N);
 	printArray(Num);
 
+	test; //test
+
 
 	return 0;
 }
