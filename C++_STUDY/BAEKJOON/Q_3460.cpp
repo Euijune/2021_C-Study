@@ -19,7 +19,7 @@ int main() {
 	Num = deciTobin(N);
 	printArray(Num);
 
-	test; //test
+	modify;
 
 
 	return 0;
