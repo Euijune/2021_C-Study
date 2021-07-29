@@ -1,54 +1,35 @@
-#include <iostream>
-#include <cstring>	//memset 함수 백준에서 동작
-using namespace std;
+#include <stdio.h>
+#include <string>	//memset 함수 백준에서 동작
 
-char** matrix2D(int n) {
-	char** arr = new char* [n];
-	for (int i = 0; i < n; i++) {
-		arr[i] = new char[n];
-		memset(arr[i], '0', n * sizeof(char));
-	}
+std::string* matrix(int n) {
+	std::string* arr = new std::string [n+3];
 
 	return arr;
 }
 
-void deleteMatrix2D(char** arr, int n) {
+void printMatrix(std::string* arr, int n) {
 	for (int i = 0; i < n; i++) {
-		delete[] arr[i]; 
-	} 
-	delete[] arr;
-
-}
-
-void printMatrix2D(char** arr, int n) {
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << arr[i][j];
-		}
-		cout << endl;
+		printf("%s\n", arr[i].c_str());
 	}
 }
 
-void star(char** arr, int N, int row, int col) {
+void star(std::string* arr, int N, int row, int col) {	// row, col은 별을 그리게되는 시작점을 말한다. (default = (0,0))
 	if (N == 1) {
-		arr[0][0] = '*';
+		arr[0]= "*";
 	}
 	else if (N == 3) {	// default
-		for (int i = row; i < N + row; i++) {
-			for (int j = col; j < N + col; j++) {
-				arr[i][j] = '*';
-			}
+		for (int i = row; i < 3 + row; i++) {
+			arr[i] += "***";
 		}
-		arr[row+1][col+1] = ' ';
+		arr[row + 1][col + 1] = ' ';
 	}
 	else {
 		for (int i = row; i < 3 + row; i++) {
 			for (int j = col; j < 3 + col; j++) {
-				int n_row = (i-row) * N/3 + row;
-				int n_col = (j-col) * N/3 + col;
+				int n_row = row + (i - row) * N / 3;
+				int n_col = col + (j - col) * N / 3;
 				//cout << '\t' <<"N : "<<N/3<< " row : " << n_row << " col : " << n_col << endl;	//test
-				star(arr, N / 3, n_row, n_col); // star(arr, N/3, row, col);
-
+				star(arr, N / 3, n_row, n_col);
 			}
 		}
 		for (int i = N / 3 + row; i < N * 2 / 3 + row; i++) {
@@ -61,14 +42,14 @@ void star(char** arr, int N, int row, int col) {
 
 int main() {
 	int N;
-	cin >> N;
-	char** arr;
+	scanf_s("%d", &N);
+	std::string* arr;
 	
-	arr = matrix2D(N);
+	arr = matrix(N);
 	star(arr, N, 0, 0);
-	printMatrix2D(arr, N);
+	printMatrix(arr, N);
 
-	deleteMatrix2D(arr, N);
+	delete[] arr;
 
 	return 0;
 }
