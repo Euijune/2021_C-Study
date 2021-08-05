@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <stack>
 #include <algorithm>
+#include <cstring>
 
 using namespace std;
 int N, M, V;
@@ -73,7 +73,6 @@ void DFS(int x) {
 	cout << cur << " ";
 
 	for (int next : graph[cur]) {
-
 		if (DFSvisit[next])	continue;
 		DFS(next);
 	}
