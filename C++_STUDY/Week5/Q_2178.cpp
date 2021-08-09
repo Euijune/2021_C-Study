@@ -7,7 +7,7 @@ using namespace std;
 #define C second	// pair 에서 first, second 줄여쓰기 위해서. Ex) pair.X, pair.Y
 
 int board[101][101];
-int dist[101][101];	// 해당 칸 방문여부 저장
+int dist[101][101];	// distance
 int row, col;
 int dr[4] = { 1, 0, -1, 0 };
 int dc[4] = { 0, 1, 0, -1 };	// 하 우 상 좌
