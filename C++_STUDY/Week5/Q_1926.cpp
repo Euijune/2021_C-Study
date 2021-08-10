@@ -16,7 +16,6 @@ void DFS(pair<int, int> start);
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-
 	cin >> row >> col;
 
 	for (int i = 0; i < row; i++) {
@@ -33,7 +32,6 @@ int main(){
             }
         }
     }
-
     cout << paintingNum << '\n' << maxArea;
 
 	return 0;
@@ -41,7 +39,6 @@ int main(){
 
 void DFS(pair<int, int> start) {
     int i = start.R, j = start.C, area = 0;
-
     vis[i][j] = 1;
     S.push({ i, j });
 
@@ -58,6 +55,5 @@ void DFS(pair<int, int> start) {
             S.push({ nx,ny });
         }
     }
-
-    if (area > maxArea) maxArea = area;
+    maxArea = max(area, maxArea);
 }

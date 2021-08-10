@@ -55,6 +55,7 @@ void BFS(pair<int, int> startP) {
 		for (int i = 0; i < 4; i++) {
 			int nX = cur.X + dx[i];
 			int nY = cur.Y + dy[i];
+
 			if (nX < 0 || nX >= N || nY < 0 || nY >= N)		continue;
 			if (board[nX][nY] == '0' || vis[nX][nY] == 1)	continue;
 
