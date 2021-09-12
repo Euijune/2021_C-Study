@@ -20,7 +20,7 @@ void deci2bin(int N, vector<int>& binary) {
 }
 
 int main() {
-	int T, N;
+	int T, N, indx;
 	cin >> T;
 	
 
@@ -31,13 +31,14 @@ int main() {
 		vector<int> binary;
 		deci2bin(N, binary);
 
-		indx = 0
+		indx = 0;
 		for (int elem : binary) {
 			if (elem) {
 				cout << indx << " ";
 			}
 			indx++;
 		}
+		cout << endl;
 	}
 	
 	return 0;
