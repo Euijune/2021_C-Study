@@ -1,8 +1,11 @@
 #include <iostream>
-
 using namespace std;
 
 int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
 	int N, min_num = 1000000, max_num = -1000000;
 	cin >> N;
 
@@ -10,13 +13,8 @@ int main() {
 		int temp;
 		cin >> temp;
 
-		if (temp < min_num) {
-			min_num = temp;
-		}
-		if (temp > max_num) {
-			max_num = temp;
-		}
-
+		min_num = min_num > temp ? temp : min_num;
+		max_num = max_num < temp ? temp : max_num;
 	}
 
 	cout << min_num << " " << max_num;
