@@ -1,21 +1,32 @@
 #include <iostream>
+#include <memory.h>
 using namespace std;
 
-int oneTwoThree(int n);
+#define Ncond 12
+int oneTwoThree[Ncond];
+
+int OTT(int n) {
+	if (oneTwoThree[n] == -1)
+		oneTwoThree[n] = OTT(n - 3) + OTT(n - 2) + OTT(n - 1);
+
+	return oneTwoThree[n];
+}
 
 int main() {
 	int T;
 	cin >> T;
+	memset(oneTwoThree, -1, Ncond * sizeof(int));
 
-	int input;
+	oneTwoThree[0] = 1;
+	oneTwoThree[1] = 1;
+	oneTwoThree[2] = 2;
+
+	int n;
 	while (T--) {
-		cin >> input;
-		cout << oneTwoThree(input) << endl;
+		cin >> n;
+		cout << OTT(n) << endl;
 	}
 
 	return 0;
 }
 
-int oneTwoThree(int n) {
-
-}
