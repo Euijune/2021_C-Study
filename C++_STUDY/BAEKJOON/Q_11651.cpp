@@ -1,18 +1,7 @@
 #include <iostream>
-#include <queue>
 
 using namespace std;
 typedef pair<int, int> pii;
-
-class comp {
-public:
-	bool operator()(const pii& lhs, const pii& rhs) {
-		if (lhs.second == rhs.second)
-			return lhs.first > rhs.first;
-		else
-			return lhs.second > rhs.second;		
-	}
-};
 
 int main() {
 	// For fast I/O
@@ -21,19 +10,23 @@ int main() {
 	cout.tie(NULL);
 
 	int N;
-	priority_queue<pii, vector<pii>, comp> q;
-
 	cin >> N;
+	pii* CCS = new pii[N];	// Cartesian Coordinate System Á÷±³ÁÂÇ¥°è
+
 	for (int i = 0; i < N; i++) {
 		pii temp;
 		cin >> temp.first >> temp.second;
-		q.push(temp);
+		CCS[i] = temp;
 	}
-	
-	while (!q.empty()) {
-		cout << q.top().first << " " << q.top().second << endl;
-		q.pop();
-	}
+
+	// merge sort
+	...
+
+
+	for (int i = 0; i < N; i++)
+		cout << CCS[i].first << " " << CCS[i].second << endl;
+
+	delete[] CCS;
 	
 	return 0;
 }
