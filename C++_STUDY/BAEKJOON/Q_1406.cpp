@@ -1,13 +1,23 @@
 #include <iostream>
-#include <string>
+#include <list>
 using namespace std;
 
-string Editor;
+list<char> Editor;
 int M;
 
+void Print(list<char> lst);
+
 int main() {
-	cin >> Editor;
+	// For fast I/O
+	ios_base::sync_with_stdio(false); 
+	cin.tie(NULL); cout.tie(NULL);
+
+	string s;
 	auto Cursor = Editor.end();
+
+	cin >> s;
+	for (int i = 0; i < s.size(); i++)
+		Editor.push_back(s[i]);
 
 	char cmd;
 	char chr;
@@ -23,20 +33,29 @@ int main() {
 			Cursor = Cursor == Editor.end() ? Cursor : ++Cursor;
 			break;
 		case 'B':
-			if (Cursor != Editor.begin()) {
+			if (Cursor != Editor.begin())
 				Cursor = Editor.erase(--Cursor);
-			}
 			break;
 		case 'P':
 			cin >> chr;
-			Editor.insert(Cursor, chr);
+			Cursor = Editor.insert(Cursor, chr);
+			Cursor++;
 		}
 		//Debug
-		//cout << Editor << '\n';
+		/*Print(Editor);
+		if (Cursor == Editor.end())			
+			cout << "\t||\tCursor : END" << '\n';
+		else
+			cout << "\t||\tCursor : " << *Cursor << '\n';*/
+		
 	}
 
-	for (auto it = Editor.begin(); it != Editor.end(); it++)
-		cout << *it;
+	Print(Editor);
 
 	return 0;
+}
+
+void Print(list<char> lst) {
+	for (auto it = lst.begin(); it != lst.end(); it++)
+		cout << *it;
 }
