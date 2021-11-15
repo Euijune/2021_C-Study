@@ -13,6 +13,7 @@ int main() {
 	cin.tie(NULL); cout.tie(NULL);
 
 	string s;
+	// list<char>::iteartor Cursor = Editor.end();
 	auto Cursor = Editor.end();
 
 	cin >> s;
