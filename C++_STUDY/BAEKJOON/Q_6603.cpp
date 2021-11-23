@@ -3,11 +3,16 @@
 using namespace std;
 
 int* S;
+int indxes[6] = { 0,1,2,3,4,5 };
 int k;
 
 void makeSet();
 
 int main() {
+	// For fast I/O
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 	
 	do {
 		cin >> k;
@@ -17,6 +22,7 @@ int main() {
 			cin >> S[i];
 
 		makeSet();
+		cout << '\n';
 
 	} while (k != 0);
 
@@ -24,20 +30,11 @@ int main() {
 }
 
 void makeSet() {
-	int indxs[6] = { 0,1,2,3,4,5 };
-	int items[6] = { S[1], S[2], S[3], S[4], S[5], S[6] };
-
-	while (indxs[0] != k-5) {
-		for (int i = 1; i < k; i++)
-			if (indxs[i] == k - (5 - i)) {
-				indxs[i - 1]++;
-				indxs[i] = indxs[i - 1] + 1;
-			}
-
-		for (int indx : indxs)
-			cout << indx << " ";
-		cout << endl;
-
-		indxs[5]++;
-	}
+	for (int c1 = 0; c1 <= k - 6; c1++)
+		for (int c2 = c1 + 1; c2 <= k - 5; c2++)
+			for (int c3 = c2 + 1; c3 <= k - 4; c3++)
+				for (int c4 = c3 + 1; c4 <= k - 3; c4++)
+					for (int c5 = c4 + 1; c5 <= k - 2; c5++)
+						for (int c6 = c5 + 1; c6 <= k - 1; c6++)
+							cout << S[c1] << " " << S[c2] << " " << S[c3] << " " << S[c4] << " " << S[c5] << " " << S[c6] << '\n';
 }
