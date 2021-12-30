@@ -6,72 +6,65 @@ using namespace std;
 
 int N;
 int elem[3] = { 1,2,3 };
-vector<int> seq, MIN;
+vector<int> seq;
 
 void DFS(vector<int>, int);
-bool split(vector<int>, int, int);
+bool check(vector<int> v, int start, int mid, int end);
 bool check_goodSeq(vector<int>, int, int, int);
 
 int main() {
-	MIN.reserve(N+2);
-	seq.reserve(N+2);
-	MIN.push_back(-1);
+	seq.reserve(N + 2);
 
 	cin >> N;
 	seq.push_back(1);
 	DFS(seq, 0);
 
-	for (int i = 0; i < MIN.size(); i++)
-		cout << MIN[i];
-
 	return 0;
 }
 
-bool check_goodSeq(vector<int> v, int start, int mid, int end) {
-	int i = start;
-	int j = mid + 1;
-	int count = 0;
+bool check(vector<int> v, int start, int mid, int end) {
 
-	while (i <= mid && j <= end) {
+	int i = mid;
+	int j = end;
+	int count = 0;
+	while (start <= i && mid + 1 <= j) {
 		if (v[i] == v[j])
 			count++;
-		i++;
-		j++;
+		i--;
+		j--;
 	}
 	if (count == mid + 1 - start)	return false;
 	else							return true;
 }
 
-bool split(vector<int> v, int start, int end) {
-	bool state1, state2, state, temp;
-	if (start < end) {
+bool check_goodSeq(vector<int> v) {
+	int size = v.size();
+	bool goodSeq = true;
+
+	for (int i = 1; i <= size / 2; i++) {
+		int start = size - i*2;
+		int end = size - 1;
 		int mid = (start + end) / 2;
-		state1 = split(v, start, mid);
-		state2 = split(v, mid + 1, end);
-		temp = check_goodSeq(v, start, mid, end);
-		state = state1 && state2 && temp;
-		return state;
+		goodSeq = check(v, start, mid, end);
+
+		if (!goodSeq)	break;
 	}
-	return true;
+	return goodSeq;
 }
 
 
 void DFS(vector<int> v, int sp) {
 	if (v.size() == N) {
-		if (split(v, 0, v.size() - 1)) { // 좋은 수열인지 체크.
-			if (MIN[0] == -1)
-				MIN.assign(v.begin(), v.end());
-			else if (v < MIN)
-				MIN.assign(v.begin(), v.end());
-		}
-		return;
+		for (int i = 0; i < N; i++)
+			cout << v[i];
+		exit(0);
 	}
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++)
 		if (v[sp] != elem[i]) {
 			v.push_back(elem[i]);
-			DFS(v, sp + 1);
+			if (check_goodSeq(v)) // 좋은 수열인지 체크.
+				DFS(v, sp + 1);
 			v.pop_back();
 		}
-	}
 }
