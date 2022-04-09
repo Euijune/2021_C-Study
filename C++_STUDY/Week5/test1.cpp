@@ -1,33 +1,3 @@
-
-
-#include <iostream>
-#include <iostream>
-#include <iostream
-
-#include <iostream>
-#includ
-#include <iostream
-#include <iostream>
-#include <iostream
-
-#include <iostream>
-	#includ
-#include <iostream
-#include <iostream>
-#include <iostream
-
-#include <iostream>
-	#includ
-#include <iostream
-#include <iostream>
-#include <iostream
-
-#include <iostream>
-	#includ
-#include <iostream
-#include <iostream>
-#include <iostream
-
-#include <iostream>
+de <iostream>
 	#includ
 #include <iostream
