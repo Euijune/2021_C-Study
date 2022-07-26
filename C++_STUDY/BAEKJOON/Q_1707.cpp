@@ -11,12 +11,12 @@ using namespace std;
 bool check_color(const vector<vector<int>>& graph, const vector<int>& color) {
 	for (int curr = 0; curr < graph.size(); curr++)
 		for (int adj : graph[curr])
-			if (color[adj] != INIT && color[adj] == color[curr])
+			if (color[adj] == color[curr])
 				return false;
 	return true;
 }
 
-bool is_bipartite(const vector<vector<int>>& graph, vector<bool>& visit, vector<int>& color, int start) {
+void BFS(const vector<vector<int>>& graph, vector<bool>& visit, vector<int>& color, int start) {
 	queue<int> q;
 
 	q.push(start);
@@ -27,15 +27,20 @@ bool is_bipartite(const vector<vector<int>>& graph, vector<bool>& visit, vector<
 		int curr = q.front();
 		q.pop();
 
-		for (int adj : graph[curr]) {
+		for (int adj : graph[curr])
 			if (!visit[adj]) {
 				visit[adj] = true;
 				color[adj] = color[curr] == A ? B : A;
 				q.push(adj);
 			}
-		}
 	}
+}
 
+bool is_bipartite(const vector<vector<int>>& graph, vector<bool>& visit, vector<int>& color) {
+	BFS(graph, visit, color, 0);
+	for (int i = 1; i < graph.size(); i++)
+		if (!visit[i])
+			BFS(graph, visit, color, i);
 	return check_color(graph, color);
 }
 
@@ -63,7 +68,7 @@ int main() {
 			graph[v].push_back(u);
 		}
 
-		if (is_bipartite(graph, visit, color, 0))
+		if (is_bipartite(graph, visit, color))
 			cout << "YES" << endl;
 		else
 			cout << "NO" << endl;
